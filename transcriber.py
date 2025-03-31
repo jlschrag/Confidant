@@ -43,9 +43,13 @@ class Transcriber():
                     
                     file_path = os.path.join(input_dir, file_name)
                     output_filename = self._get_output_filename(file_path)
+                    deadletter_filename = os.path.join(ts.deadletter_output_directory, output_filename)
                     
                     if os.path.getsize(file_path) > 10 * 1024 * 1024:  # 10MB in bytes
                         print(f"Skipping {output_filename}. > 10MB")
+                        continue
+                    
+                    if os.path.exists(deadletter_filename):
                         continue
                     
                     file_already_processed = False
@@ -75,4 +79,7 @@ class Transcriber():
                             processed = True
                     
                     if not processed:
-                        print(f"Skipping {output_filename}. No valid output found.")
+                        os.makedirs(ts.deadletter_output_directory, exist_ok=True)
+                        with open(deadletter_filename, "w", encoding="utf-8") as f:
+                            f.write(transcription)
+                            print(f"Processed {file_name} to {deadletter_filename}")

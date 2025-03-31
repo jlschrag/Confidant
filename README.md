@@ -12,6 +12,10 @@ transcription-sets:
       - directory: /mnt/journal
         filter:
           keyword: journal
+    deadletter:
+      text-output:
+        directory: /mnt/unsorted_output
+  - transcription-set:
     audio-inputs:
       - directory: /mnt/presorted/tasks
     text-outputs:

@@ -16,8 +16,9 @@ transcription-sets:
         - directory: /mnt/documents/Transcription/Baby Book
           filter:
             keyword: baby
-    #      - directory: /mnt/documents/Transcription/Unsorted
-    #        type: deadletter
+      deadletter:
+        text-output:
+          directory: /mnt/documents/Transcription/Unsorted
   - transcription-set:
       audio-inputs:
         - directory: /mnt/documents/RecordingSandbox/Standup Material

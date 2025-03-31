@@ -1,6 +1,7 @@
 1. Create a `config.yaml` in the root directory with the following structure:
 ```yaml
-- transcription-set:
+transcription-sets:
+  - transcription-set:
     audio-inputs:
       - directory: /mnt/unsorted_recordings
       - directory: /Misc
@@ -15,5 +16,11 @@
       - directory: /mnt/presorted/tasks
     text-outputs:
       - directory: /mnt/tasks
+aggregations:
+  - input:
+      directory: /mnt/tasks
+    output:
+      filepath: /mnt/aggregated_tasks.txt
+
 ```
 2. `uv run python main.py`

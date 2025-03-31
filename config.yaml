@@ -1,39 +1,45 @@
-- transcription-set:
-    audio-inputs:
-      - directory: /mnt/documents/RecordingSandbox/Unsorted
-      - directory: /mnt/documents/RecordingSandbox/Unsorted 2021
-      - directory: /mnt/documents/RecordingSandbox/Unsorted 2022
-      - directory: /mnt/documents/RecordingSandbox/Unsorted 2023
-      - directory: /mnt/documents/RecordingSandbox/Misc
-    text-outputs:
-      - directory: /mnt/documents/Transcription/Standup
-        filter:
-          keyword: standup
-      - directory: /mnt/documents/Transcription/Journal
-        filter:
-          keyword: journal
-      - directory: /mnt/documents/Transcription/Baby Book
-        filter:
-          keyword: baby
-  #      - directory: /mnt/documents/Transcription/Unsorted
-  #        type: deadletter
-- transcription-set:
-    audio-inputs:
-      - directory: /mnt/documents/RecordingSandbox/Standup Material
-    text-outputs:
-      - directory: /mnt/documents/Transcription/Standup
-- transcription-set:
-    audio-inputs:
-      - directory: /mnt/documents/RecordingSandbox/Journal
-    text-outputs:
-      - directory: /mnt/documents/Transcription/Journal
-- transcription-set:
-    audio-inputs:
-      - directory: /mnt/documents/RecordingSandbox/MMA Notes
-    text-outputs:
-      - directory: /mnt/documents/Transcription/MMA Notes
-- transcription-set:
-    audio-inputs:
-      - directory: /mnt/documents/RecordingSandbox/Notes on Books & Podcasts
-    text-outputs:
-      - directory: /mnt/documents/Transcription/Notes on Books & Podcasts
+transcription-sets:
+  - transcription-set:
+      audio-inputs:
+        - directory: /mnt/documents/RecordingSandbox/Unsorted
+        - directory: /mnt/documents/RecordingSandbox/Unsorted 2021
+        - directory: /mnt/documents/RecordingSandbox/Unsorted 2022
+        - directory: /mnt/documents/RecordingSandbox/Unsorted 2023
+        - directory: /mnt/documents/RecordingSandbox/Misc
+      text-outputs:
+        - directory: /mnt/documents/Transcription/Standup
+          filter:
+            keyword: standup
+        - directory: /mnt/documents/Transcription/Journal
+          filter:
+            keyword: journal
+        - directory: /mnt/documents/Transcription/Baby Book
+          filter:
+            keyword: baby
+    #      - directory: /mnt/documents/Transcription/Unsorted
+    #        type: deadletter
+  - transcription-set:
+      audio-inputs:
+        - directory: /mnt/documents/RecordingSandbox/Standup Material
+      text-outputs:
+        - directory: /mnt/documents/Transcription/Standup
+  - transcription-set:
+      audio-inputs:
+        - directory: /mnt/documents/RecordingSandbox/Journal
+      text-outputs:
+        - directory: /mnt/documents/Transcription/Journal
+  - transcription-set:
+      audio-inputs:
+        - directory: /mnt/documents/RecordingSandbox/MMA Notes
+      text-outputs:
+        - directory: /mnt/documents/Transcription/MMA Notes
+  - transcription-set:
+      audio-inputs:
+        - directory: /mnt/documents/RecordingSandbox/Notes on Books & Podcasts
+      text-outputs:
+        - directory: /mnt/documents/Transcription/Notes on Books & Podcasts
+aggregations:
+  - input:
+      directory: /mnt/documents/Transcription/Standup
+    output:
+      filepath: /mnt/documents/Transcription/StandupAggregation.txt

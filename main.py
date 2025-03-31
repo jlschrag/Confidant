@@ -3,7 +3,7 @@ import whisperx
 
 from config import load_config_from
 from transcriber import Transcriber
-
+from aggregator import Aggregator
                             
                             
 if __name__ == "__main__":
@@ -13,4 +13,7 @@ if __name__ == "__main__":
     t = Transcriber(model)
     
     config = load_config_from("config.yaml")
-    t.process_files(config)
+    t.process_files(config.transcription_sets)
+    
+    agg = Aggregator(config.aggregations)
+    agg.aggregate_text_files()

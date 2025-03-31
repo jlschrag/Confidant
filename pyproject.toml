@@ -1,0 +1,12 @@
+[project]
+name = "whisperx-transcriber"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pytest>=8.3.5",
+    "ruff>=0.11.2",
+    "torch>=2.6.0",
+    "whisperx>=3.3.1",
+]

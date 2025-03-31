@@ -6,9 +6,10 @@ class OutputConfig:
         self.keyword: str = filter["keyword"] if filter and "keyword" in filter else []
 
 class TranscriptionSetConfig:
-    def __init__(self, audio_input: list[dict], outputs: list[OutputConfig]):
+    def __init__(self, audio_input: list[dict], outputs: list[OutputConfig], deadletter_output_directory: str = ""):
         self.audio_inputs: list[str] = [entry["directory"] for entry in audio_input]
         self.text_outputs: list[OutputConfig] = outputs
+        self.deadletter_output_directory: str = deadletter_output_directory
         
 class AggregationConfig:
     def __init__(self, input_directory: str, output_filepath: str):
@@ -28,7 +29,9 @@ def load_config_from(yaml_file_path: str) -> Config:
     for entry in data.get("transcription-sets", []):
         ts = entry.get("transcription-set", [])
         outputs = [OutputConfig(**output) for output in ts["text-outputs"]]
-        transcription_configs.append(TranscriptionSetConfig(ts["audio-inputs"], outputs))
+        deadletter_config = ts.get("deadletter", [])
+        deadletter_dir = deadletter_config["text-output"]["directory"] if deadletter_config else ""
+        transcription_configs.append(TranscriptionSetConfig(ts["audio-inputs"], outputs, deadletter_dir))
         
     aggregation_configs: list[AggregationConfig] = []
     for entry in data.get("aggregations", []):

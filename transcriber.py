@@ -1,4 +1,5 @@
 import os
+import time
 import whisperx
 
 from typing import List
@@ -29,6 +30,22 @@ class Transcriber():
             filename = datetime.fromtimestamp(creation_time).strftime("%Y-%m-%d_%H-%M-%S")
             
         return filename + ".txt"
+    
+    def _write_file(self, path: str, filename: str, contents: str, retry_count: int, retry_delay: int) -> bool:
+        output_path = os.path.join(path, filename)
+        
+        for attempt in range(retry_count):
+            try:
+                with open(output_path, "w", encoding="utf-8") as f:
+                    f.write(contents)
+                print(f"Processed {filename} to {path}")
+                return True
+            except:
+                time.sleep(retry_delay)
+                print(f"Retrying write of {filename} to {path}")
+                
+        return False
+            
 
     def process_files(self, transcription_sets: List[TranscriptionSetConfig]) -> None:
         """Processes audio files based on transcription configurations."""
@@ -43,15 +60,17 @@ class Transcriber():
                     
                     file_path = os.path.join(input_dir, file_name)
                     output_filename = self._get_output_filename(file_path)
-                    deadletter_filename = os.path.join(ts.deadletter_output_directory, output_filename)
+                    deadletter_filepath = os.path.join(ts.deadletter_output.directory, output_filename)
                     
-                    if os.path.getsize(file_path) > 10 * 1024 * 1024:  # 10MB in bytes
-                        print(f"Skipping {output_filename}. > 10MB")
+                    if os.path.getsize(file_path) > 5 * 1024 * 1024:  # MB in bytes
+                        print(f"Skipping {output_filename}. > max size")
                         continue
                     
-                    if os.path.exists(deadletter_filename):
+                    if os.path.exists(deadletter_filepath):
                         continue
                     
+                    # TODO: There is a bug here. If multiple outputs are configured, based on filter keywords, and one previously succeeded while the others failed,
+                    # This will skip reprocessing.
                     file_already_processed = False
                     for output in ts.text_outputs:
                         output_path = os.path.join(output.directory, output_filename)
@@ -72,14 +91,12 @@ class Transcriber():
                             
                     for output in ts.text_outputs:
                         if not output.keyword or output.keyword in first_12_words:
-                            output_path = os.path.join(output.directory, output_filename)
-                            with open(output_path, "w", encoding="utf-8") as f:
-                                f.write(transcription)
-                            print(f"Processed {file_name} to {output_path}")
-                            processed = True
+                            processed = self._write_file(output_path, output_filename, output.retry_count, output.retry_delay)
                     
                     if not processed:
-                        os.makedirs(ts.deadletter_output_directory, exist_ok=True)
-                        with open(deadletter_filename, "w", encoding="utf-8") as f:
-                            f.write(transcription)
-                            print(f"Processed {file_name} to {deadletter_filename}")
+                        os.makedirs(ts.deadletter_output.directory, exist_ok=True)
+                        self._write_file(ts.deadletter_output.directory, 
+                                         output_filename, 
+                                         transcription, 
+                                         ts.deadletter_output.retry_count, 
+                                         ts.deadletter_output.retry_delay)

@@ -10,37 +10,64 @@ transcription-sets:
         - directory: /mnt/documents/Transcription/Standup
           filter:
             keyword: standup
+          retry:
+            count: 5
+            delay: 5
         - directory: /mnt/documents/Transcription/Journal
           filter:
             keyword: journal
+          retry:
+            count: 5
+            delay: 5
         - directory: /mnt/documents/Transcription/Baby Book
           filter:
             keyword: baby
+          retry:
+            count: 5
+            delay: 5
       deadletter:
         text-output:
           directory: /mnt/documents/Transcription/Unsorted
+          retry:
+            count: 5
+            delay: 5
   - transcription-set:
       audio-inputs:
         - directory: /mnt/documents/RecordingSandbox/Standup Material
       text-outputs:
         - directory: /mnt/documents/Transcription/Standup
+          retry:
+            count: 5
+            delay: 5
   - transcription-set:
       audio-inputs:
         - directory: /mnt/documents/RecordingSandbox/Journal
       text-outputs:
         - directory: /mnt/documents/Transcription/Journal
+          retry:
+            count: 5
+            delay: 5
   - transcription-set:
       audio-inputs:
         - directory: /mnt/documents/RecordingSandbox/MMA Notes
       text-outputs:
         - directory: /mnt/documents/Transcription/MMA Notes
+          retry:
+            count: 5
+            delay: 5
   - transcription-set:
       audio-inputs:
         - directory: /mnt/documents/RecordingSandbox/Notes on Books & Podcasts
       text-outputs:
         - directory: /mnt/documents/Transcription/Notes on Books & Podcasts
+          retry:
+            count: 5
+            delay: 5
 aggregations:
   - input:
       directory: /mnt/documents/Transcription/Standup
     output:
       filepath: /mnt/documents/Transcription/StandupAggregation.txt
+      retry:
+        count: 5
+        delay: 5

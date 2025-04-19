@@ -2071,6 +2071,15 @@ wheels = [
 ]
 
 [[package]]
+name = "wakeonlan"
+version = "3.1.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/ec/98/b92125baeaf67b3a838bfdb4ac4e685c793ce2771686b10df44275e424a4/wakeonlan-3.1.0.tar.gz", hash = "sha256:aa12edc2587353528a89ad58a54c63212dc2a12226c186b7fcc02caa162cd962", size = 4242 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e9/47/99a02d847104bbc08d10b147e77593c127c405774fa7f5247afd152754e5/wakeonlan-3.1.0-py3-none-any.whl", hash = "sha256:9414da87f48e5dc8a1bb0fa15aba5a0079cfd014231c4cc8e6f2477a0d078c7e", size = 4984 },
+]
+
+[[package]]
 name = "whisperx"
 version = "3.3.1"
 source = { registry = "https://pypi.org/simple" }
@@ -2097,6 +2106,7 @@ dependencies = [
     { name = "pytest" },
     { name = "ruff" },
     { name = "torch" },
+    { name = "wakeonlan" },
     { name = "whisperx" },
 ]
 
@@ -2105,6 +2115,7 @@ requires-dist = [
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "ruff", specifier = ">=0.11.2" },
     { name = "torch", specifier = ">=2.6.0" },
+    { name = "wakeonlan", specifier = ">=3.1.0" },
     { name = "whisperx", specifier = ">=3.3.1" },
 ]
 

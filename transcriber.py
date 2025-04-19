@@ -4,8 +4,10 @@ import whisperx
 
 from typing import List
 from datetime import datetime
+from wakeonlan import send_magic_packet
 
 from config import TranscriptionSetConfig
+from file_system_utils import FileSystemUtils
 
 
 class Transcriber():
@@ -41,11 +43,20 @@ class Transcriber():
                 print(f"Processed {filename} to {path}")
                 return True
             except:
+                self._send_wake_on_lan()
+                    
                 time.sleep(retry_delay)
                 print(f"Retrying write of {filename} to {path}")
                 
         return False
-            
+    
+    def _send_wake_on_lan(self):
+        mac_address = "00:11:32:71:DE:12"
+        
+        try:
+            send_magic_packet(mac_address, ip_address="192.168.1.255") #################################### Replace
+        except Exception as ex:
+            print(ex)
 
     def process_files(self, transcription_sets: List[TranscriptionSetConfig]) -> None:
         """Processes audio files based on transcription configurations."""
@@ -54,15 +65,12 @@ class Transcriber():
                 for output in ts.text_outputs:
                     os.makedirs(output.directory, exist_ok=True)
                 
-                for file_name in os.listdir(input_dir):
-                    if not file_name.endswith(('.mp3', '.wav', '.m4a', '.flac')):
-                        continue
-                    
+                for file_name in FileSystemUtils.list_files_by_mtime(input_dir):
                     file_path = os.path.join(input_dir, file_name)
                     output_filename = self._get_output_filename(file_path)
                     deadletter_filepath = os.path.join(ts.deadletter_output.directory, output_filename)
                     
-                    if os.path.getsize(file_path) > 5 * 1024 * 1024:  # MB in bytes
+                    if os.path.getsize(file_path) > 10 * 1024 * 1024:  # MB in bytes
                         print(f"Skipping {output_filename}. > max size")
                         continue
                     
@@ -91,7 +99,7 @@ class Transcriber():
                             
                     for output in ts.text_outputs:
                         if not output.keyword or output.keyword in first_12_words:
-                            processed = self._write_file(output_path, output_filename, output.retry_count, output.retry_delay)
+                            processed = self._write_file(output.directory, output_filename, transcription, output.retry_count, output.retry_delay)
                     
                     if not processed:
                         os.makedirs(ts.deadletter_output.directory, exist_ok=True)

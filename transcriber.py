@@ -1,5 +1,6 @@
 import os
 import time
+import torch
 import whisperx
 
 from typing import List
@@ -11,14 +12,23 @@ from file_system_utils import FileSystemUtils
 
 
 class Transcriber():
-    def __init__(self, model):
-        self.model = model
+    def __init__(self):
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        model_dir = "./model/"
+        self.model = whisperx.load_model("large-v3", self.device, compute_type="float32", language="en", download_root=model_dir)
 
     def _transcribe_audio(self, file_path: str) -> str:
         """Transcribes audio using whisperx and returns the text."""
         audio = whisperx.load_audio(file_path)
         result = self.model.transcribe(audio)        
         return "\n\n".join(segment["text"] for segment in result["segments"])
+
+        # delete model if low on GPU resources
+        # import gc; gc.collect(); torch.cuda.empty_cache(); del model
+
+        # TODO: Align whisper output
+        # model_a, metadata = whisperx.load_align_model(language_code=result["language"], device=self.device)
+        # result = whisperx.align(result["segments"], model_a, metadata, audio, self.device, return_char_alignments=False)
 
     def _get_output_filename(self, file_path: str) -> str:
         """

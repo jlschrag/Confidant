@@ -10,5 +10,7 @@ wheels/
 .venv
 
 config.yaml
-unsorted_transcripts/
+Transcription/
 Recordings/
+Model/
+model/

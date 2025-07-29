@@ -13,7 +13,7 @@ class Sorter:
     def sort(self) -> None:
         input_path = Path("/mnt/documents/Transcription/Unsorted")
         output_path = Path("/mnt/documents/Transcription/Standup")
-        # output_path.mkdir(parents=True, exist_ok=True)
+        output_path.mkdir(parents=True, exist_ok=True)
 
         for file in input_path.glob("*.txt"):
             try:
@@ -24,3 +24,5 @@ class Sorter:
                         print(f"Moved: {file.name}")
             except Exception as e:
                 print(f"Error processing {file.name}: {e}")
+                
+        print("Sorting complete")

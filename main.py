@@ -2,6 +2,7 @@ from config import load_config_from
 from transcriber import Transcriber
 from aggregator import Aggregator
 from sorter import Sorter
+from txt_to_pdf import Converter
                             
                             
 if __name__ == "__main__":
@@ -12,7 +13,7 @@ if __name__ == "__main__":
     agg = Aggregator(config.aggregations)
     
     t.process_files(config.transcription_sets)
-    
     s.sort()
-    
     agg.aggregate_text_files()
+    
+    Converter.run_conversions(config)

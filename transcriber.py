@@ -80,9 +80,6 @@ class Transcriber():
                     output_filename = self._get_output_filename(file_path)
                     deadletter_filepath = os.path.join(ts.deadletter_output.directory, output_filename)
                     
-                    if os.path.getsize(file_path) > 10 * 1024 * 1024:  # MB in bytes
-                        print(f"Skipping {output_filename}. > max size")
-                        continue
                     
                     if os.path.exists(deadletter_filepath):
                         continue

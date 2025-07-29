@@ -25,10 +25,16 @@ class AggregationConfig:
         self.retry_count = retry_count
         self.retry_delay = retry_delay
         
+class PdfConversionConfig:
+    def __init__(self, input_directory: str, output_directory: str):
+        self.input_directory = input_directory
+        self.output_directory = output_directory
+        
 class Config:
-    def __init__(self, transcription_sets: list[TranscriptionSetConfig], aggregations: list[AggregationConfig]):
+    def __init__(self, transcription_sets: list[TranscriptionSetConfig], aggregations: list[AggregationConfig], pdf_conversions: list[PdfConversionConfig]):
         self.transcription_sets = transcription_sets
         self.aggregations = aggregations
+        self.pdf_conversions = pdf_conversions
     
 def load_config_from(yaml_file_path: str) -> Config:
     with open(yaml_file_path, "r", encoding="utf-8") as file:
@@ -59,5 +65,11 @@ def load_config_from(yaml_file_path: str) -> Config:
         retry_count = entry["output"].get("retry", {}).get("count", DEFAULT_RETRY_COUNT)
         retry_delay = entry["output"].get("retry", {}).get("delay", DEFAULT_RETRY_DELAY)
         aggregation_configs.append(AggregationConfig(input_dir, output_filepath, retry_count, retry_delay))
+        
+    pdf_conversion_configs: list[PdfConversionConfig] = []
+    for entry in data.get("pdf_conversions", []):
+        input_dir = entry["input"]["directory"]
+        output_dir = entry["output"]["directory"]
+        pdf_conversion_configs.append(PdfConversionConfig(input_dir, output_dir))
     
-    return Config(transcription_configs, aggregation_configs)
+    return Config(transcription_configs, aggregation_configs, pdf_conversion_configs)

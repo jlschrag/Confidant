@@ -1,30 +1,69 @@
-1. Create a `config.yaml` in the root directory with the following structure:
+Confidant is a voice note transcription app, designed to handle multiple input & output directories, sorting by keyword, note aggregation, & conversion to PDF.  It runs locally, with no data sent to third parties.  It is fully functional - roughly beta state.
+
+# Setup
+1. Clone this repo
+2. Create a `config.yaml` in the root directory with the following structure:
 ```yaml
 transcription-sets:
   - transcription-set:
-    audio-inputs:
-      - directory: /mnt/unsorted_recordings
-      - directory: /Misc
-    text-outputs:
-      - directory: /mnt/tasks
-        filter:
-          keyword: task
-      - directory: /mnt/journal
-        filter:
-          keyword: journal
-    deadletter:
-      text-output:
-        directory: /mnt/unsorted_output
+      audio-inputs:
+        - directory: Recordings/Unsorted
+        - directory: Recordings/Unsorted 2021
+        - directory: Recordings/Unsorted 2022
+        - directory: Recordings/Unsorted 2023
+        - directory: Recordings/Misc
+      text-outputs:
+        - directory: Transcription/Workouts
+          filter:
+            keyword: workouts
+          retry:
+            count: 20
+            delay: 5
+        - directory: Transcription/Workouts
+          filter:
+            keyword: work
+          retry:
+            count: 20
+            delay: 5
+        - directory: Transcription/Workouts
+          filter:
+            keyword: work-outs
+          retry:
+            count: 20
+            delay: 5
+        - directory: Transcription/Journal
+          filter:
+            keyword: journal
+          retry:
+            count: 20
+            delay: 5
+      deadletter:
+        text-output:
+          directory: Transcription/Unsorted
+          retry:
+            count: 20
+            delay: 5
   - transcription-set:
-    audio-inputs:
-      - directory: /mnt/presorted/tasks
-    text-outputs:
-      - directory: /mnt/tasks
+      audio-inputs:
+        - directory: Recordings/Notes
+      text-outputs:
+        - directory: Transcription/Notes
+          retry:
+            count: 20
+            delay: 5
 aggregations:
   - input:
-      directory: /mnt/tasks
+      directory: Transcription/Notes
     output:
-      filepath: /mnt/aggregated_tasks.txt
+      filepath: Transcription/NoteAggregation.txt
+      retry:
+        count: 20
+        delay: 5
+pdf_conversions:
+  - input:
+      directory: "/mnt/documents/Text Files"
+    output:
+      directory: "/mnt/documents/PDFs"
 
 ```
-2. `uv run python main.py`
+3. `uv run python main.py`

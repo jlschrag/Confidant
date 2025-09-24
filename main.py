@@ -2,12 +2,12 @@ from config import load_config_from
 from transcriber import Transcriber
 from aggregator import Aggregator
 from sorter import Sorter
-from txt_to_pdf import Converter
+from converter import Converter
                             
                             
 if __name__ == "__main__":
     t = Transcriber()
-    
+
     config = load_config_from("config.yaml")
     s = Sorter()
     agg = Aggregator(config.aggregations)

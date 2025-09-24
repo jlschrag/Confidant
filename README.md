@@ -1,8 +1,10 @@
-Confidant is a voice note transcription app, designed to handle multiple input & output directories, sorting by keyword, note aggregation, & conversion to PDF.  It runs locally, with no data sent to third parties.  It is fully functional - roughly beta state.
+Confidant is a voice note transcription app, designed to handle multiple input & output directories, sorting by keyword, note aggregation, & conversion to PDF.  It runs locally, with no data sent to third parties.  It is fully functional - roughly beta state.  But, lets be honest - kinda vibe coded. :)
+
+If `filters` are set for the `text-outputs` in the `config.yaml`, the transcriber will check the first twelve words of a recording for filter keywords and route the resulting transcription files accordingly.
 
 # Setup
 1. Clone this repo
-2. Create a `config.yaml` in the root directory with the following structure:
+2. Create a `config.yaml` in the root directory with the following structure (example - omit any sections not needed):
 ```yaml
 transcription-sets:
   - transcription-set:

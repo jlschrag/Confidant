@@ -1,4 +1,4 @@
-Confidant is a voice note transcription app, designed to handle multiple input & output directories, sorting by keyword, note aggregation, & conversion to PDF.  It runs locally, with no data sent to third parties.  It is fully functional for the author (if a bit buggy), and making it generally reusable is in progress currently.
+Confidant is a voice note transcription app, designed to handle multiple input & output directories, sorting by keyword, note aggregation, & conversion to PDF.  It runs locally, with no data sent to third parties.  Currently in an alpha state, and not yet ready for use by the general public.
 
 # Prerequisites
 1. Python >=3.12

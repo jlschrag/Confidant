@@ -13,7 +13,8 @@ from file_system_utils import FileSystemUtils
 
 class Transcriber():
     def __init__(self):
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        #self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.device = "cpu"
         model_dir = "./model/"
         self.model = whisperx.load_model("large-v3", self.device, compute_type="float32", language="en", download_root=model_dir)
 

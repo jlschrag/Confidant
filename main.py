@@ -12,8 +12,8 @@ if __name__ == "__main__":
     s = Sorter()
     agg = Aggregator(config.aggregations)
     
-    t.process_files(config.transcription_sets)
-    s.sort()
-    agg.aggregate_text_files()
+    #t.process_files(config.transcription_sets)
+    #s.sort()
+    #agg.aggregate_text_files()
     
     Converter.run_conversions(config)

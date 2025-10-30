@@ -1,7 +1,7 @@
 [project]
-name = "whisperx-transcriber"
+name = "confidant"
 version = "0.1.0"
-description = "Add your description here"
+description = "Privacy-centric utilities to manage voice recordings "
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -11,4 +11,16 @@ dependencies = [
     "torch>=2.6.0",
     "wakeonlan>=3.1.0",
     "whisperx>=3.3.1",
+]
+
+[project.scripts]
+deleteme = "confidant:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
 ]

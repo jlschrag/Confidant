@@ -1,7 +1,8 @@
 from fpdf import FPDF
 import os
 
-from config import load_config_from, Config
+from confidant.config import load_config_from, Config
+
 
 class Converter:
     @classmethod

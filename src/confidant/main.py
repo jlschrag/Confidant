@@ -1,10 +1,10 @@
-from config import load_config_from
-from transcriber import Transcriber
-from aggregator import Aggregator
-from sorter import Sorter
-from converter import Converter
-                            
-                            
+from confidant.aggregator import Aggregator
+from confidant.config import load_config_from
+from confidant.converter import Converter
+from confidant.sorter import Sorter
+from confidant.transcriber import Transcriber
+
+
 if __name__ == "__main__":
     t = Transcriber()
 

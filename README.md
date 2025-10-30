@@ -1,10 +1,16 @@
-Confidant is a voice note transcription app, designed to handle multiple input & output directories, sorting by keyword, note aggregation, & conversion to PDF.  It runs locally, with no data sent to third parties.  It is fully functional - roughly beta state.  But, lets be honest - kinda vibe coded. :)
+Confidant is a voice note transcription app, designed to handle multiple input & output directories, sorting by keyword, note aggregation, & conversion to PDF.  It runs locally, with no data sent to third parties.  Currently in an alpha state, and not yet ready for use by the general public.
 
-If `filters` are set for the `text-outputs` in the `config.yaml`, the transcriber will check the first twelve words of a recording for filter keywords and route the resulting transcription files accordingly.
+# Prerequisites
+1. Python >=3.12
+2. `uv` - a Python package installer (`pip install uv`).
+3. An NVIDIA GPU with CUDA is recommended for hardware acceleration of the transcription process. The application will fall back to using the CPU if a compatible GPU is not found.
 
 # Setup
 1. Clone this repo
-2. Create a `config.yaml` in the root directory with the following structure (example - omit any sections not needed):
+2. Run `uv sync && uv run pre-commit install` from the root directory
+3. Create a `config.yaml` in the root directory with the following structure (omit any sections not needed):
+
+_Note: If `filters` are set for the `text-outputs` in the `config.yaml`, the transcriber will check the first twelve words of a recording for filter keywords and route the resulting transcription files accordingly._
 ```yaml
 transcription-sets:
   - transcription-set:
@@ -68,4 +74,10 @@ pdf_conversions:
       directory: "/mnt/documents/PDFs"
 
 ```
-3. `uv run python main.py`
+
+# Commmands
+Execute: `uv run python src/confidant/main.py`
+Linting: `uvx ruff check src`
+Type Checking: `uvx ty check src`
+Tests: `uv run pytest`
+Precommit: `uv run pre-commit run --all-files`

@@ -1,7 +1,8 @@
 import os
 
-from config import AggregationConfig
-from file_system_utils import FileSystemUtils
+from confidant.config import AggregationConfig
+from confidant.file_system_utils import FileSystemUtils
+
 
 class Aggregator:
     def __init__(self, aggregation_configs: list[AggregationConfig]):

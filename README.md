@@ -1,8 +1,14 @@
-Confidant is a voice note transcription app, designed to handle multiple input & output directories, sorting by keyword, note aggregation, & conversion to PDF.  It runs locally, with no data sent to third parties.  It is fully functional - roughly beta state.
+Confidant is a voice note transcription app, designed to handle multiple input & output directories, sorting by keyword, note aggregation, & conversion to PDF.  It runs locally, with no data sent to third parties.  It is fully functional for the author (if a bit buggy), and making it generally reusable is in progress currently.
+
+# Prerequisites
+1. Python >=3.12
+2. `uv` - a Python package installer (`pip install uv`).
+3. An NVIDIA GPU with CUDA is recommended for hardware acceleration of the transcription process. The application will fall back to using the CPU if a compatible GPU is not found.
 
 # Setup
 1. Clone this repo
-2. Create a `config.yaml` in the root directory with the following structure:
+2. Run `uv lock && uv sync` from the root directory
+3. Create a `config.yaml` in the root directory with the following structure:
 ```yaml
 transcription-sets:
   - transcription-set:
@@ -66,4 +72,10 @@ pdf_conversions:
       directory: "/mnt/documents/PDFs"
 
 ```
-3. `uv run python main.py`
+4. `uv run python src/confidant/main.py`
+
+# Linting
+Run `uvx ruff check .` from the root directory.
+
+# Tests
+Run `uv run pytest` from the root directory.

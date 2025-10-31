@@ -1,6 +1,6 @@
-import os
 import shutil
 from pathlib import Path
+
 
 class Sorter:
     def _contains_standup_phrase(self, text: str) -> bool:
@@ -24,5 +24,5 @@ class Sorter:
                         print(f"Moved: {file.name}")
             except Exception as e:
                 print(f"Error processing {file.name}: {e}")
-                
+
         print("Sorting complete")

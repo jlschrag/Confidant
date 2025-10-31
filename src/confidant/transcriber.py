@@ -4,7 +4,6 @@ import whisperx
 
 from typing import List
 from datetime import datetime
-from wakeonlan import send_magic_packet
 
 from confidant.config import TranscriptionSetConfig
 from confidant.file_system_utils import FileSystemUtils
@@ -67,23 +66,11 @@ class Transcriber:
                     f.write(contents)
                 print(f"Processed {filename} to {path}")
                 return True
-            except:
-                self._send_wake_on_lan()
-
+            except Exception:
                 time.sleep(retry_delay)
                 print(f"Retrying write of {filename} to {path}")
 
         return False
-
-    def _send_wake_on_lan(self):
-        mac_address = "00:11:32:71:DE:12"
-
-        try:
-            send_magic_packet(
-                mac_address, ip_address="192.168.1.255"
-            )  #################################### Replace
-        except Exception as ex:
-            print(ex)
 
     def process_files(self, transcription_sets: List[TranscriptionSetConfig]) -> None:
         """Processes audio files based on transcription configurations."""

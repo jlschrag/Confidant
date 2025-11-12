@@ -1,7 +1,11 @@
+import logging
 from fpdf import FPDF
 import os
 
 from confidant.config import load_config_from, Config
+
+
+logging.getLogger("fontTools").setLevel(logging.ERROR)
 
 
 class Converter:
@@ -15,12 +19,17 @@ class Converter:
             
             pdf = FPDF()
             pdf.add_page()
-            pdf.set_font("Helvetica", size=12)
+            pdf.add_font(family="DejaVuSans", fname=r"fonts/DejaVuSans.ttf")
+            pdf.set_font("DejaVuSans", size = 12) 
             
-            with open(os.path.join(input_directory, fname), encoding='utf-8') as f:
+            input_file_path = os.path.join(input_directory, fname)
+            output_file_path = os.path.join(output_directory, fname[:-4] + ".pdf")
+            print(f"Converting {input_file_path} to PDF...")
+            
+            with open(input_file_path, encoding='utf-8') as f:
                 for line in f:
-                    pdf.multi_cell(0, 10, line)
-            pdf.output(os.path.join(output_directory, fname[:-4] + ".pdf"))
+                    pdf.multi_cell(0, 5, line)
+            pdf.output(output_file_path)
     
     @classmethod
     def run_conversions(cls, config: Config):

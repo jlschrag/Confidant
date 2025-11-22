@@ -121,7 +121,7 @@ class Transcriber:
                                 output.retry_delay,
                             )
 
-                    if not processed:
+                    if not processed and ts.deadletter_output and ts.deadletter_output.directory:
                         os.makedirs(ts.deadletter_output.directory, exist_ok=True)
                         self._write_file(
                             ts.deadletter_output.directory,

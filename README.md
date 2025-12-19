@@ -7,7 +7,7 @@ Confidant is a voice note transcription app, designed to handle multiple input &
 
 # Setup
 1. Clone this repo
-2. Run `uv lock && uv sync` from the root directory
+2. Run `uv sync && uv run pre-commit install` from the root directory
 3. Create a `config.yaml` in the root directory with the following structure (omit any sections not needed):
 
 _Note: If `filters` are set for the `text-outputs` in the `config.yaml`, the transcriber will check the first twelve words of a recording for filter keywords and route the resulting transcription files accordingly._
@@ -74,10 +74,10 @@ pdf_conversions:
       directory: "/mnt/documents/PDFs"
 
 ```
-4. `uv run python src/confidant/main.py`
 
-# Linting
-Run `uvx ruff check .` from the root directory.
-
-# Tests
-Run `uv run pytest` from the root directory.
+# Commmands
+Execute: `uv run python src/confidant/main.py`
+Linting: `uvx ruff check src`
+Type Checking: `uvx ty check src`
+Tests: `uv run pytest`
+Precommit: `uv run pre-commit run --all-files`

@@ -48,7 +48,7 @@ class Transcriber:
                 "%Y-%m-%d_%H-%M-%S"
             )
 
-        return filename + ".txt"
+        return filename + ".md"
 
     def _write_file(
         self,
@@ -121,7 +121,11 @@ class Transcriber:
                                 output.retry_delay,
                             )
 
-                    if not processed and ts.deadletter_output and ts.deadletter_output.directory:
+                    if (
+                        not processed
+                        and ts.deadletter_output
+                        and ts.deadletter_output.directory
+                    ):
                         os.makedirs(ts.deadletter_output.directory, exist_ok=True)
                         self._write_file(
                             ts.deadletter_output.directory,
